@@ -82,15 +82,40 @@ color: aliceblue;}
           <div class="center">
             <a href="#" class="btn btn-primary btn-lg active homeButton" role="button" aria-pressed="true">Aprende a jugar</a>
           </div>
-
-          <div class="center">
-            <img src="{% static "src/images/cardsBack.png" %}" width="75px">
-          </div>
         </div>
+          <div class="row">
+            <div class="center">
+              <img id="image" src="{% static "src/images/cardsBack.png" %}" width="75px">
+            </div>
+          </div>
       </div>
     </div>
 
     
 </body>
+<script>
+function addListeners() {
+    document.getElementById('image').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mouseup', mouseUp, false);
+}
+
+function mouseUp() {
+    window.removeEventListener('mousemove', divMove, true);
+}
+
+function mouseDown() {
+    window.addEventListener('mousemove', divMove, true);
+}
+
+function divMove(e){
+    var div = document.getElementById('image');
+    div.style.position = 'absolute';
+    div.style.top = e.clientY + 'px';
+    div.style.left = e.clientX + 'px';
+}
+
+
+addListeners();
+</script>
 
 </html>
