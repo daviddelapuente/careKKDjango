@@ -77,27 +77,32 @@ color: aliceblue;}
 
 <body id="bg" style="background-image: url('{% static "src/images/greenTable.png" %}')";>
 
-    <div class="row">
-      <div class="col">
-        <div class="centerBorder container-fluid">
-          <h1 class="center">careKK</h1>
-          <div class="center">
-            <a href="{% url 'PvsIA' %}" class="btn btn-primary btn-lg active homeButton" role="button" aria-pressed="true">Juego nuevo</a>
-          </div>
-          <div class="center">
-            <a href="#" class="btn btn-primary btn-lg active homeButton" role="button" aria-pressed="true">Aprende a jugar</a>
-          </div>
-        </div>
-          <div class="row">
-            <div class="cards">
-              <img id="image" src="{% static "src/images/cardsBack.png" %}" width="75px">
-            </div>
-          </div>
-      </div>
-    </div>
+<div id="Player2Id">
 
-    
+</div>
+
+<div id="player1Id">
+
+</div>
+
 </body>
+
+<script>
+
+function setCards(){
+    document.querySelector('#player1Id').insertAdjacentHTML(
+    'afterbegin',
+    `<div>
+        <img id="image" src="{% static "src/images/cardsBack.png" %}" width="75px">
+    </div>`      
+  )
+}
+
+setCards();
+
+</script>
+
+
 <script>
 function addListeners() {
     document.getElementById('image').addEventListener('mousedown', mouseDown, false);
