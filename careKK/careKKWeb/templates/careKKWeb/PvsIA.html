@@ -73,6 +73,9 @@ color: aliceblue;}
   width: 200px;
 }
 
+.card{
+  position: absolute;
+}
 </style>
 
 <body id="bg" style="background-image: url('{% static "src/images/greenTable.png" %}')";>
@@ -89,26 +92,55 @@ color: aliceblue;}
 
 <script>
 
-function setCards(){
-    document.querySelector('#player1Id').insertAdjacentHTML(
-    'afterbegin',
-    `<div>
-        <img id="image" src="{% static "src/images/cardsBack.png" %}" width="75px">
-    </div>`      
-  )
+function setP1CloseFieldCards(){
+  var totalWidth=screen.width;
+  document.querySelector('#player1Id').innerHTML=
+    "<div>"+
+        "<img class=\"card\" id=\"card1\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(-2))+"px\">"+
+    "</div>"+
+    "<div>"+
+        "<img class=\"card\" id=\"card2\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(-1))+"px\">"+
+    "</div>"+
+    "<div>"+
+        "<img class=\"card\" id=\"card3\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(0))+"px\">"+
+    "</div>"+
+    "<div>"+
+        "<img class=\"card\" id=\"card4\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(1))+"px\">"+
+    "</div>"; 
+
+  
 }
 
-setCards();
+function setP2CloseFieldCards(){
+  var totalWidth=screen.width;
+  document.querySelector('#Player2Id').innerHTML=
+    "<div>"+
+        "<img class=\"card\" id=\"card1asd\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(-2))+"px\">"+
+    "</div>"+
+    "<div>"+
+        "<img class=\"card\" id=\"cardasd2\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(-1))+"px\">"+
+    "</div>"+
+    "<div>"+
+        "<img class=\"card\" id=\"cardas3\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(0))+"px\">"+
+    "</div>"+
+    "<div>"+
+        "<img class=\"card\" id=\"carddsa4\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(1))+"px\">"+
+    "</div>"; 
+
+  
+}
+
+setP2CloseFieldCards();
+setP1CloseFieldCards();
 
 </script>
 
 
 <script>
 function addListeners() {
-    document.getElementById('image').addEventListener('mousedown', mouseDown, false);
+    document.getElementById('card1').addEventListener('mousedown', mouseDown, false);
     window.addEventListener('mouseup', mouseUp, false);
 }
-
 function mouseUp() {
     window.removeEventListener('mousemove', divMove, true);
 }
@@ -118,7 +150,7 @@ function mouseDown() {
 }
 
 function divMove(e){
-    var div = document.getElementById('image');
+    var div = document.getElementById('card1');
     div.style.position = 'absolute';
     div.style.top = (e.clientY-50) + 'px';
     div.style.left = (e.clientX-20) + 'px';
