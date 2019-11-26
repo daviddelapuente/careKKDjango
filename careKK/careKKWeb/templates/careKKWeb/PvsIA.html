@@ -137,23 +137,29 @@ setP1CloseFieldCards();
 
 
 <script>
+let cardId;
 function addListeners() {
-    document.getElementById('card1').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mousedown',mouseDown,false);
     window.addEventListener('mouseup', mouseUp, false);
 }
 function mouseUp() {
     window.removeEventListener('mousemove', divMove, true);
+    cardId=null
 }
 
-function mouseDown() {
-    window.addEventListener('mousemove', divMove, true);
+function mouseDown(e) {
+    console.log(e.explicitOriginalTarget.parentNode.parentNode.id)
+    if (e.explicitOriginalTarget.parentNode.parentNode.id=="player1Id"){
+      cardId=e.target.id
+      window.addEventListener('mousemove', divMove, true);
+    }
 }
 
 function divMove(e){
-    var div = document.getElementById('card1');
-    div.style.position = 'absolute';
-    div.style.top = (e.clientY-50) + 'px';
-    div.style.left = (e.clientX-20) + 'px';
+  var div = document.getElementById(cardId);
+  div.style.position = 'absolute';
+  div.style.top = (e.clientY-50) + 'px';
+  div.style.left = (e.clientX-20) + 'px';
 }
 
 
