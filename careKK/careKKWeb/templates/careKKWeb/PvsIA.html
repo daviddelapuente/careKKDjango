@@ -94,18 +94,19 @@ color: aliceblue;}
 
 function setP1CloseFieldCards(){
   var totalWidth=screen.width;
+  var totalHeigh=screen.height;
   document.querySelector('#player1Id').innerHTML=
     "<div>"+
-        "<img class=\"card\" id=\"card1\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(-2))+"px\">"+
+        "<img class=\"card\" id=\"card0\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-200)+"px;left:"+(totalWidth/5+75*(0))+"px\">"+
     "</div>"+
     "<div>"+
-        "<img class=\"card\" id=\"card2\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(-1))+"px\">"+
+        "<img class=\"card\" id=\"card1\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-200)+"px;left:"+(totalWidth/5+75*(1))+"px\">"+
     "</div>"+
     "<div>"+
-        "<img class=\"card\" id=\"card3\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(0))+"px\">"+
+        "<img class=\"card\" id=\"card2\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-200)+"px;left:"+(totalWidth/5+75*(2))+"px\">"+
     "</div>"+
     "<div>"+
-        "<img class=\"card\" id=\"card4\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"bottom:100px;left:"+(totalWidth/3-75*(1))+"px\">"+
+        "<img class=\"card\" id=\"card3\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-200)+"px;left:"+(totalWidth/5+75*(3))+"px\">"+
     "</div>"; 
 
   
@@ -115,16 +116,16 @@ function setP2CloseFieldCards(){
   var totalWidth=screen.width;
   document.querySelector('#Player2Id').innerHTML=
     "<div>"+
-        "<img class=\"card\" id=\"card1asd\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(-2))+"px\">"+
+        "<img class=\"card\" id=\"card1asd\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/5+75*(0))+"px\">"+
     "</div>"+
     "<div>"+
-        "<img class=\"card\" id=\"cardasd2\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(-1))+"px\">"+
+        "<img class=\"card\" id=\"cardasd2\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/5+75*(1))+"px\">"+
     "</div>"+
     "<div>"+
-        "<img class=\"card\" id=\"cardas3\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(0))+"px\">"+
+        "<img class=\"card\" id=\"cardas3\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/5+75*(2))+"px\">"+
     "</div>"+
     "<div>"+
-        "<img class=\"card\" id=\"carddsa4\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/3-75*(1))+"px\">"+
+        "<img class=\"card\" id=\"carddsa4\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:100px;left:"+(totalWidth/5+75*(3))+"px\">"+
     "</div>"; 
 
   
@@ -142,13 +143,25 @@ function addListeners() {
     window.addEventListener('mousedown',mouseDown,false);
     window.addEventListener('mouseup', mouseUp, false);
 }
+
+function cardToRespectivePosition(){
+  var totalWidth=screen.width;
+  var totalHeigh=screen.height;
+  var div = document.getElementById(cardId);
+  div.style.position = 'absolute';
+  div.style.top = (totalHeigh-200)+"px";
+  let i=cardId.slice(4);
+  console.log(i)
+  div.style.left=(totalWidth/5+75*(i))+"px";
+}
+
 function mouseUp() {
-    window.removeEventListener('mousemove', divMove, true);
-    cardId=null
+  cardToRespectivePosition();
+  window.removeEventListener('mousemove', divMove, true);
+  cardId=null
 }
 
 function mouseDown(e) {
-    console.log(e.explicitOriginalTarget.parentNode.parentNode.id)
     if (e.explicitOriginalTarget.parentNode.parentNode.id=="player1Id"){
       cardId=e.target.id
       window.addEventListener('mousemove', divMove, true);
