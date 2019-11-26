@@ -84,7 +84,7 @@ color: aliceblue;}
 
 </div>
 
-<div id="player1Id">
+<div id="player1Id" value=1>
 
 </div>
 
@@ -100,12 +100,12 @@ function setP1CloseFieldCards(i){
   if(i%2==0){
     for(var j=0;j<i/2;j++){
       cardsHtml+="<div>"+
-        "<img class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2-75*(j+1))+"px\">"+
+        "<img valuex=\""+(totalWidth/2-75*(j+1))+"\" valuey=\""+(totalHeigh-300)+"\" class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2-75*(j+1))+"px\">"+
       "</div>";
     };
     for(var j=i/2;j<i;j++){
       cardsHtml+="<div>"+
-        "<img class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2+75*(j-i/2))+"px\">"+
+        "<img valuex=\""+(totalWidth/2+75*(j-i/2))+"\" valuey=\""+(totalHeigh-300)+"\"  class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2+75*(j-i/2))+"px\">"+
       "</div>";
     };
 
@@ -113,17 +113,17 @@ function setP1CloseFieldCards(i){
     var mediana=i/2-0.5;
     for(var j=0;j<mediana;j++){
       cardsHtml+="<div>"+
-        "<img class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2-75*(j+2)+37.5)+"px\">"+
+        "<img valuex=\""+(totalWidth/2-75*(j+2)+37.5)+"\" valuey=\""+(totalHeigh-300)+"\" class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2-75*(j+2)+37.5)+"px\">"+
       "</div>";
     };
 
     cardsHtml+="<div>"+
-      "<img class=\"card\" id=\"p1card"+mediana+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2-37.5)+"px\">"+
+      "<img valuex=\""+(totalWidth/2-37.5)+"\" valuey=\""+(totalHeigh-300)+"\" class=\"card\" id=\"p1card"+mediana+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2-37.5)+"px\">"+
     "</div>";
 
     for(var j=mediana+1;j<i;j++){
       cardsHtml+="<div>"+
-        "<img class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2+75*(j-mediana)-37.5)+"px\">"+
+        "<img valuex=\""+(totalWidth/2+75*(j-mediana)-37.5)+"\" valuey=\""+(totalHeigh-300)+"\" class=\"card\" id=\"p1card"+j+"\" src=\"{% static "src/images/cardsBack.png" %}\" width=\"75px\" style=\"top:"+(totalHeigh-300)+"px;left:"+(totalWidth/2+75*(j-mediana)-37.5)+"px\">"+
       "</div>";
     };
 
@@ -183,6 +183,9 @@ setP2CloseFieldCards(4);
 
 <script>
 let cardId;
+let cardTop;
+let cardLeft;
+
 function addListeners() {
     window.addEventListener('mousedown',mouseDown,false);
     window.addEventListener('mouseup', mouseUp, false);
@@ -193,21 +196,25 @@ function cardToRespectivePosition(){
   var totalHeigh=screen.height;
   var div = document.getElementById(cardId);
   div.style.position = 'absolute';
-  div.style.top = (totalHeigh-200)+"px";
+  div.style.top = (cardTop)+"px";
   let i=cardId.slice(4);
-  console.log(i)
-  div.style.left=(totalWidth/5+75*(i))+"px";
+  div.style.left=cardLeft+"px";
 }
 
 function mouseUp() {
   cardToRespectivePosition();
   window.removeEventListener('mousemove', divMove, true);
-  cardId=null
+  cardId=null;
+  cardLeft=null;
+  cardTop=null;
 }
 
 function mouseDown(e) {
+
     if (e.explicitOriginalTarget.parentNode.parentNode.id=="player1Id"){
-      cardId=e.target.id
+      cardTop=e.target.attributes.valuey.value;
+      cardLeft=e.target.attributes.valuex.value;
+      cardId=e.target.id;
       window.addEventListener('mousemove', divMove, true);
     }
 }
