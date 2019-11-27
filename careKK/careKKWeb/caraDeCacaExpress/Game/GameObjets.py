@@ -1,4 +1,4 @@
-from Game.players import *
+from .players import *
 class card:
     def __init__(self,char,value,virtual_value):
         self.char=char

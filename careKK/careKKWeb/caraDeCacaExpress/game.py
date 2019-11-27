@@ -1,5 +1,4 @@
-from Game.GameObjets import *
-from displayThings.consoleDisplay import *
+from .Game.GameObjets import *
 
 class game:
     def __init__(self,players,deck,handLen,fieldsLen):
@@ -51,13 +50,6 @@ class gamePvIA(game):
         self.boardMessage=""
         game.__init__(self,players,deck,handLen,fieldsLen)
 
-    def printGame(self):
-        clearscreen()
-        print(self.boardMessage)
-        self.table.show()
-        #is important to set the board message to "" because if not, then the massege will be printed on every turn.
-        self.boardMessage=""
-
     def RealPlayerPlay(self,jugadas,i):
         if jugadas[0]=="draw":
             self.boardMessage="jugador 1 roba el pozo"
@@ -86,6 +78,9 @@ class gamePvIA(game):
             self.boardMessage="ingresa una jugada valida"
             self.askRealPlayerToPlay(i)
         
+    def repartirCartas(self):
+        self.table.repartirCartas()
+        
     def play(self):
         clearscreen()
         self.table.repartirCartas()
@@ -102,26 +97,3 @@ class gamePvIA(game):
                 winnerMessage="gana jugador " + "2"
                 break
         self.endGame(winnerMessage)
-
-#Ia vs IA
-class gameIAvIA(game):
-    def printGame(self):
-        clearscreen2()
-        self.table.show()
-        #is important to set the board message to "" because if not, then the massege will be printed on every turn.
-
-    def play(self):
-        self.table.repartirCartas()
-        #here is a while true that keep the game alive but it will eventualy end when someone wins
-        while(True):
-            self.IAPlayerPlay(0)
-            if self.playerWin(self.players[0]):
-                winnerMessage="gana jugador " + "1"
-                winner=0
-                break
-            self.IAPlayerPlay(1)
-            if self.playerWin(self.players[1]):
-                winnerMessage="gana jugador " + "2"
-                winner=1
-                break
-        return winner
