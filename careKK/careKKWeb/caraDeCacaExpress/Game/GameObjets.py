@@ -1,9 +1,11 @@
 from .players import *
 class card:
-    def __init__(self,char,value,virtual_value):
+    def __init__(self,char,value,virtual_value,frontImg,BackImg):
         self.char=char
         self.value=value
         self.virtual_value=virtual_value
+        self.frontImage=frontImg
+        self.BackImg=BackImg
 
     def getChar(self):
         return self.char
@@ -11,6 +13,10 @@ class card:
         return self.value
     def getVirtualValue(self):
         return self.virtual_value
+    def getFrontImg(self):
+        return self.frontImage
+    def getBackImg(self):
+        return self.BackImg
 
 class deck:
     def __init__(self,cards):

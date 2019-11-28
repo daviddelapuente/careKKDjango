@@ -53,6 +53,18 @@ class field:
                 return False
         return True
 
+    def getCardsImg(self):
+        imgs=[]
+        for card in self.cards:
+            imgs.append("/static/src/images/"+card.getFrontImg())
+        return imgs
+
+    def getCardsBackImg(self):
+        imgs=[]
+        for card in self.cards:
+            imgs.append("/static/src/images/"+card.getBackImg())
+        return imgs
+
 class hand(field):
     def __init__(self,cards):
         field.__init__(self,cards)
