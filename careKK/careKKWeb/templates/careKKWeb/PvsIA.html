@@ -92,7 +92,7 @@ color: aliceblue;}
 
 <script>
 
-function setPlayerFieldCards(field,playerId,ypos,divId,cardId){
+function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
   var i=field.length;
   var totalWidth=screen.width;
 
@@ -108,8 +108,13 @@ function setPlayerFieldCards(field,playerId,ypos,divId,cardId){
       img.setAttribute("class","card");
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
-      img.setAttribute("src",field[j]);
-      img.style.top=(ypos)+"px";
+      img.setAttribute("src",field[(i/2-1)-j]);
+      if (ref=="top"){
+        img.style.top=(ypos)+"px";
+      }else{
+        img.style.bottom=(ypos)+"px";
+      }
+      
       img.style.left=(totalWidth/2-75*(j+1))+"px";
       document.getElementById(divId+j).appendChild(img);
     };
@@ -127,7 +132,11 @@ function setPlayerFieldCards(field,playerId,ypos,divId,cardId){
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
       img.setAttribute("src",field[j]);
-      img.style.top=(ypos)+"px";
+      if (ref=="top"){
+        img.style.top=(ypos)+"px";
+      }else{
+        img.style.bottom=(ypos)+"px";
+      }
       img.style.left=(totalWidth/2+75*(j-i/2))+"px";
       document.getElementById(divId+j).appendChild(img);
     };
@@ -146,7 +155,7 @@ function setPlayerFieldCards(field,playerId,ypos,divId,cardId){
       img.setAttribute("class","card");
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
-      img.setAttribute("src",field[j]);
+      img.setAttribute("src",field[(mediana-1)-j]);
       img.style.top=(ypos)+"px";
       img.style.left=(totalWidth/2-75*(j+2)+37.5)+"px";
       document.getElementById(divId+j).appendChild(img);
@@ -198,14 +207,23 @@ function setPlayerFieldCards(field,playerId,ypos,divId,cardId){
 
 
 
-setPlayerFieldCards({{p1CloseField|safe}},"player1Id",(screen.height-300),"divP1Close","imgP1CloseCard");
-setPlayerFieldCards({{p2CloseField|safe}},"player2Id",200,"divP2Close","imgP2CloseCard");
 
-setPlayerFieldCards({{p1OpenField|safe}},"player1Id",(screen.height-330),"divP1Open","imgP1OpenCard");
-setPlayerFieldCards({{p2OpenField|safe}},"player2Id",230,"divP2Open","imgP2OpenCard");
 
-setPlayerFieldCards({{p1Hand|safe}},"player1Id",(screen.height-175),"divP1Hand","imgP1HandCard");
-setPlayerFieldCards({{p2Hand|safe}},"player2Id",75,"divP2Hand","imgP2HandCard");
+setPlayerFieldCards({{p1CloseField|safe}},"player1Id","bottom",175,"divP1Close","imgP1CloseCard");
+setPlayerFieldCards({{p2CloseField|safe}},"player2Id","top",175,"divP2Close","imgP2CloseCard");
+
+setPlayerFieldCards({{p1OpenField|safe}},"player1Id","bottom",200,"divP1Open","imgP1OpenCard");
+setPlayerFieldCards({{p2OpenField|safe}},"player2Id","top",200,"divP2Open","imgP2OpenCard");
+
+setPlayerFieldCards({{p1Hand|safe}},"player1Id","bottom",50,"divP1Hand","imgP1HandCard");
+setPlayerFieldCards({{p2Hand|safe}},"player2Id","top",50,"divP2Hand","imgP2HandCard");
+
+
+
+
+
+
+
 
 </script>
 
@@ -225,7 +243,7 @@ function cardToRespectivePosition(){
   var totalHeigh=screen.height;
   var div = document.getElementById(cardId);
   div.style.position = 'absolute';
-  div.style.top = (cardTop)+"px";
+  div.style.bottom = (cardTop)+"px";
   let i=cardId.slice(4);
   div.style.left=cardLeft+"px";
 }
@@ -251,8 +269,8 @@ function mouseDown(e) {
 function divMove(e){
   var div = document.getElementById(cardId);
   div.style.position = 'absolute';
-  div.style.top = (e.clientY-50) + 'px';
-  div.style.left = (e.clientX-20) + 'px';
+  div.style.bottom = (screen.height-(e.clientY+50)) + 'px';
+  div.style.left = (e.clientX-35) + 'px';
 }
 
 
