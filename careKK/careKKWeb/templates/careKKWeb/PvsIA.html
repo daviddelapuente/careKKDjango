@@ -72,6 +72,8 @@ color: aliceblue;}
   top: 50%;
   left: 50%;
   transform: translate(-250px,-75px);
+  padding-left: 10px;
+  padding-top: 15px;
 }
 
 .dumpBorder {
@@ -84,6 +86,8 @@ color: aliceblue;}
   top: 50%;
   left: 50%;
   transform: translate(-125px,-75px);
+  padding-left: 100px;
+  padding-top: 15px;
 }
 
 .homeButton{
@@ -103,8 +107,12 @@ color: aliceblue;}
   </div>
 
   <div id="DeckAndDump">
-    <div id="deck" class="deckBorder"></div>
-    <div id="dump" class="dumpBorder"></div>
+    <div id="deck" class="deckBorder">
+      <img class = "card" width="75px" src='{% static "src/images/cardsBack.png" %}'>
+    </div>
+    <div id="dump" class="dumpBorder">
+        <img class = "card" width="75px" src='{% static "src/images/2pica.png" %}'>
+    </div>
   </div>
 
   <div id="player1Id" value=1>
