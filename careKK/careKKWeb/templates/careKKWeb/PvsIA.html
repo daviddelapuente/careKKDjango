@@ -57,11 +57,6 @@ color: aliceblue;}
   text-align: center;
 }
 
-.cards {
-  margin: auto;
-  padding: 100px;
-}
-
 .deckBorder {
   position: absolute;
   border-style: solid;
@@ -289,6 +284,7 @@ function cardToRespectivePosition(){
   var totalWidth=screen.width;
   var totalHeigh=screen.height;
   var div = document.getElementById(cardId);
+  div.removeAttribute("style")
   div.style.position = 'absolute';
   div.style.bottom = (cardTop)+"px";
   let i=cardId.slice(4);
@@ -316,7 +312,7 @@ function mouseDown(e) {
 function divMove(e){
   var div = document.getElementById(cardId);
   div.style.position = 'absolute';
-  div.style.bottom = (screen.height-(e.clientY+50)) + 'px';
+  div.style.top = (e.clientY-50) + 'px';
   div.style.left = (e.clientX-35) + 'px';
 }
 
