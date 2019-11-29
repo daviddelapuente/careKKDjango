@@ -95,18 +95,19 @@ color: aliceblue;}
 </style>
 
 <body id="bg" style="background-image: url('{% static "src/images/greenTable.png" %}')";>
-
+  
 
 
   <div id="player2Id">
   </div>
 
   <div id="DeckAndDump">
+
     <div id="deck" class="deckBorder">
       <img class = "card" width="75px" src='{% static "src/images/cardsBack.png" %}' onmousedown="if (event.preventDefault) event.preventDefault()">
     </div>
     <div id="dump" class="dumpBorder">
-        <img class = "card" width="75px" src='{% static "src/images/2pica.png" %}' onmousedown="if (event.preventDefault) event.preventDefault()">
+        
     </div>
   </div>
 
@@ -296,6 +297,19 @@ function cardToRespectivePosition(x,y){
       
       document.getElementById("dump").appendChild(img);
       document.getElementById(cardId).remove();
+      
+     
+      $.ajax( 
+      { 
+          type:"POST", 
+          url: "probando", 
+          data:{ 
+                  post_id: 3 
+      }, 
+      success: function( data ) 
+      { 
+          
+         console.log(data.f); } });
 
     }else{
       var div = document.getElementById(cardId);
