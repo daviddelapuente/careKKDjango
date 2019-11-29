@@ -265,9 +265,10 @@ setPlayerFieldCards({{p2Hand|safe}},"player2Id","top",50,"divP2Hand","imgP2HandC
 
 
 <script>
-let cardId;
-let cardTop;
-let cardLeft;
+let cardId=null;
+let cardTop=null;
+let cardLeft=null;
+
 
 function addListeners() {
     window.addEventListener('mousedown',mouseDown,false);
@@ -275,23 +276,37 @@ function addListeners() {
 }
 
 function cardToRespectivePosition(x,y){
-  console.log(document.getElementById("dump"));
-  xlow=document.getElementById("dump").offsetLeft-90;
-  xhigh=xlow+240;
-  ylow=document.getElementById("dump").offsetTop-50;
-  yhigh=ylow+105;
-  if(xlow<=x && x<=xhigh && ylow<=y && y<=yhigh){
-    console.log("bien")
-  }else{
-    var totalWidth=screen.width;
-    var totalHeigh=screen.height;
-    var div = document.getElementById(cardId);
-    div.removeAttribute("style")
-    div.style.position = 'absolute';
-    div.style.bottom = (cardTop)+"px";
-    let i=cardId.slice(4);
-    div.style.left=cardLeft+"px";
+
+  if(cardId!=null){
+    xlow=document.getElementById("dump").offsetLeft-90;
+    xhigh=xlow+240;
+    ylow=document.getElementById("dump").offsetTop-50;
+    yhigh=ylow+105;
+    if(xlow<=x && x<=xhigh && ylow<=y && y<=yhigh){
+
+      document.getElementById("dump").innerHTML="";
+      
+      var img =document.createElement("img");
+
+      img.setAttribute("class","card");
+      img.setAttribute("width","75px");
+      
+      img.setAttribute("src",document.getElementById(cardId).attributes.src.value);
+      img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()");
+      
+      document.getElementById("dump").appendChild(img);
+      document.getElementById(cardId).remove();
+
+    }else{
+      var div = document.getElementById(cardId);
+      div.removeAttribute("style")
+      div.style.position = 'absolute';
+      div.style.bottom = (cardTop)+"px";
+      let i=cardId.slice(4);
+      div.style.left=cardLeft+"px";
+    }
   }
+  
 }
 
 function mouseUp(e) {
