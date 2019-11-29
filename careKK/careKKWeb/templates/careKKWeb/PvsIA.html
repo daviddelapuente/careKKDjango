@@ -108,10 +108,10 @@ color: aliceblue;}
 
   <div id="DeckAndDump">
     <div id="deck" class="deckBorder">
-      <img class = "card" width="75px" src='{% static "src/images/cardsBack.png" %}'>
+      <img class = "card" width="75px" src='{% static "src/images/cardsBack.png" %}' onmousedown="if (event.preventDefault) event.preventDefault()">
     </div>
     <div id="dump" class="dumpBorder">
-        <img class = "card" width="75px" src='{% static "src/images/2pica.png" %}'>
+        <img class = "card" width="75px" src='{% static "src/images/2pica.png" %}' onmousedown="if (event.preventDefault) event.preventDefault()">
     </div>
   </div>
 
@@ -139,6 +139,7 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
       img.setAttribute("src",field[(i/2-1)-j]);
+      img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
       if (ref=="top"){
         img.style.top=(ypos)+"px";
       }else{
@@ -162,6 +163,7 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
       img.setAttribute("src",field[j]);
+      img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
       if (ref=="top"){
         img.style.top=(ypos)+"px";
       }else{
@@ -186,7 +188,12 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
       img.setAttribute("src",field[(mediana-1)-j]);
-      img.style.top=(ypos)+"px";
+      img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
+      if (ref=="top"){
+        img.style.top=(ypos)+"px";
+      }else{
+        img.style.bottom=(ypos)+"px";
+      }
       img.style.left=(totalWidth/2-75*(j+2)+37.5)+"px";
       document.getElementById(divId+j).appendChild(img);
 
@@ -205,7 +212,12 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
     img.setAttribute("id",cardId+mediana);
     img.setAttribute("width","75px");
     img.setAttribute("src",field[mediana]);
-    img.style.top=(ypos)+"px";
+    img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
+      if (ref=="top"){
+        img.style.top=(ypos)+"px";
+      }else{
+        img.style.bottom=(ypos)+"px";
+      }
     img.style.left=(totalWidth/2-37.5)+"px";
     document.getElementById(divId+mediana).appendChild(img);
 
@@ -223,7 +235,12 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
       img.setAttribute("src",field[j]);
-      img.style.top=(ypos)+"px";
+      img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
+      if (ref=="top"){
+        img.style.top=(ypos)+"px";
+      }else{
+        img.style.bottom=(ypos)+"px";
+      }
       img.style.left=(totalWidth/2+75*(j-mediana)-37.5)+"px";
       document.getElementById(divId+j).appendChild(img);
     };
