@@ -261,12 +261,6 @@ setPlayerFieldCards({{p1Hand|safe}},"player1Id","bottom",50,"divP1Hand","imgP1Ha
 setPlayerFieldCards({{p2Hand|safe}},"player2Id","top",50,"divP2Hand","imgP2HandCard");
 
 
-
-
-
-
-
-
 </script>
 
 
@@ -280,19 +274,28 @@ function addListeners() {
     window.addEventListener('mouseup', mouseUp, false);
 }
 
-function cardToRespectivePosition(){
-  var totalWidth=screen.width;
-  var totalHeigh=screen.height;
-  var div = document.getElementById(cardId);
-  div.removeAttribute("style")
-  div.style.position = 'absolute';
-  div.style.bottom = (cardTop)+"px";
-  let i=cardId.slice(4);
-  div.style.left=cardLeft+"px";
+function cardToRespectivePosition(x,y){
+  console.log(document.getElementById("dump"));
+  xlow=document.getElementById("dump").offsetLeft-90;
+  xhigh=xlow+240;
+  ylow=document.getElementById("dump").offsetTop-50;
+  yhigh=ylow+105;
+  if(xlow<=x && x<=xhigh && ylow<=y && y<=yhigh){
+    console.log("bien")
+  }else{
+    var totalWidth=screen.width;
+    var totalHeigh=screen.height;
+    var div = document.getElementById(cardId);
+    div.removeAttribute("style")
+    div.style.position = 'absolute';
+    div.style.bottom = (cardTop)+"px";
+    let i=cardId.slice(4);
+    div.style.left=cardLeft+"px";
+  }
 }
 
-function mouseUp() {
-  cardToRespectivePosition();
+function mouseUp(e) {
+  cardToRespectivePosition(e.clientX,e.clientY);
   window.removeEventListener('mousemove', divMove, true);
   cardId=null;
   cardLeft=null;
