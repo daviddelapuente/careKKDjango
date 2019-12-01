@@ -56,13 +56,13 @@ class field:
     def getCardsImg(self):
         imgs=[]
         for card in self.cards:
-            imgs.append("/static/src/images/"+card.getFrontImg())
+            imgs.append(["/static/src/images/"+card.getFrontImg(), card.getValue()])
         return imgs
 
     def getCardsBackImg(self):
         imgs=[]
         for card in self.cards:
-            imgs.append("/static/src/images/"+card.getBackImg())
+            imgs.append(["/static/src/images/"+card.getBackImg(),card.getValue()])
         return imgs
 
 class hand(field):

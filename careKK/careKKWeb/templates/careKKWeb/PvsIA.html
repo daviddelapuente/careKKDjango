@@ -134,8 +134,11 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("class","card");
       img.setAttribute("id",cardId+((i/2-1)-j));
       img.setAttribute("width","75px");
-      img.setAttribute("src",field[(i/2-1)-j]);
+      
+      img.setAttribute("src",field[(i/2-1)-j][0]);
+      img.setAttribute("cardValue",field[(i/2-1)-j][1]);
       img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
+      
       if (ref=="top"){
         img.style.top=(ypos)+"px";
       }else{
@@ -158,7 +161,8 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("class","card");
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
-      img.setAttribute("src",field[j]);
+      img.setAttribute("src",field[j][0]);
+      img.setAttribute("cardValue",field[j][1]);
       img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
       if (ref=="top"){
         img.style.top=(ypos)+"px";
@@ -269,6 +273,8 @@ setPlayerFieldCards({{p2Hand|safe}},"player2Id","top",50,"divP2Hand","imgP2HandC
 let cardId=null;
 let cardTop=null;
 let cardLeft=null;
+let dumpTopValue=0;
+let cardValue=null;
 
 
 function addListeners() {
@@ -283,8 +289,9 @@ function cardToRespectivePosition(x,y){
     xhigh=xlow+240;
     ylow=document.getElementById("dump").offsetTop-50;
     yhigh=ylow+105;
-    if(xlow<=x && x<=xhigh && ylow<=y && y<=yhigh){
 
+    if((cardValue>=dumpTopValue) && xlow<=x && x<=xhigh && ylow<=y && y<=yhigh){
+      dumpTopValue=cardValue;
       document.getElementById("dump").innerHTML="";
       
       var img =document.createElement("img");
@@ -328,11 +335,13 @@ function mouseUp(e) {
   cardId=null;
   cardLeft=null;
   cardTop=null;
+  cardValue=null;
 }
 
 function mouseDown(e) {
 
     if (e.explicitOriginalTarget.parentNode.parentNode.id=="player1Id"){
+      cardValue=parseInt(e.explicitOriginalTarget.attributes.cardValue.value);
       cardTop=e.target.attributes.valuey.value;
       cardLeft=e.target.attributes.valuex.value;
       cardId=e.target.id;

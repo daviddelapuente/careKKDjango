@@ -20,7 +20,7 @@ def PvsIA(request):
     realPlayer=player(hand([]),openField([]),closeField([]))
     player2=goodDeterministicPlayer(hand([]),openField([]),closeField([]))
     deck0=deck([card('2',2,2,"2pica.png","cardsBack.png"),card('2',2,2,"2pica.png","cardsBack.png"),card('2',2,2,"2pica.png","cardsBack.png"),card('2',2,2,"2pica.png","cardsBack.png"),card('3',3,3,"3pica.png","cardsBack.png"),card('3',3,3,"3pica.png","cardsBack.png"),card('7',7,7,"7pica.png","cardsBack.png"),card('7',7,7,"7pica.png","cardsBack.png"),card('7',7,7,"7pica.png","cardsBack.png"),card('7',7,7,"7pica.png","cardsBack.png"),card('10',10,10,"10pica.png","cardsBack.png"),card('10',10,10,"10pica.png","cardsBack.png"),card('10',10,10,"10pica.png","cardsBack.png"),card('10',10,10,"10pica.png","cardsBack.png"),card('11',11,11,"Jpica.png","cardsBack.png"),card('11',11,11,"Jpica.png","cardsBack.png"),card('11',11,11,"Jpica.png","cardsBack.png"),card('11',11,11,"Jpica.png","cardsBack.png"),card('13',13,13,"Kpica.png","cardsBack.png"),card('13',13,13,"Kpica.png","cardsBack.png"),card('13',13,13,"Kpica.png","cardsBack.png"),card('13',13,13,"Kpica.png","cardsBack.png"),card('14',14,14,"Apica.png","cardsBack.png"),card('14',14,14,"Apica.png","cardsBack.png")])
-    gamePvIA0=gamePvIA([realPlayer,player2],deck0,5,4)
+    gamePvIA0=gamePvIA([realPlayer,player2],deck0,4,4)
 
     gamePvIA0.repartirCartas()
     p1CloseField=gamePvIA0.players[0].getCloseField().getCardsBackImg()
@@ -36,6 +36,13 @@ def PvsIA(request):
 @csrf_exempt
 def player1Play(request):
     global gamePvIA0
-    i=int(request.POST['jugada'][13:])
-    print(gamePvIA0.players[0].getHand().getCards()[i].getValue())
+    i=request.POST['jugada'][13:]
+    #the 0 represent the player number 0
+
+    gamePvIA0.RealPlayerPlay(i,0)
+    
+
+
+
+
     return JsonResponse({"f":"funciono"})
