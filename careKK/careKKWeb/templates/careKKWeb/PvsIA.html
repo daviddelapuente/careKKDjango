@@ -314,8 +314,26 @@ function cardToRespectivePosition(x,y){
       }, 
       success: function( data ) 
       { 
+        
+        if (data.jugadaIa=="out"){
+          console.log(data.jugadaIa);
+        }else{
+
+          document.getElementById("dump").innerHTML="";
           
-         console.log(data.f); } });
+          var img =document.createElement("img");
+
+          img.setAttribute("class","card");
+          img.setAttribute("width","75px");
+          
+          img.setAttribute("src",document.getElementById("imgP2HandCard"+data.jugadaIa).attributes.src.value);
+          img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()");
+          
+          document.getElementById("dump").appendChild(img);
+          dumpTopValue= parseInt(document.getElementById("imgP2HandCard"+data.jugadaIa).attributes.cardValue.value);
+          document.getElementById("imgP2HandCard"+data.jugadaIa).remove()
+
+          }} });
 
     }else{
       var div = document.getElementById(cardId);

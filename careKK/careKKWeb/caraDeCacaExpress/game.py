@@ -11,8 +11,7 @@ class game:
         print(winnerMessage)
       
     #aqui es donde juega el player2
-    def IAPlayerPlay(self,i):
-        jugada=self.players[i].think(self.gameState)
+    def IAPlayerPlay(self,i,jugada):
         jugadas = jugada.split("-")
         if jugadas[0]=="out":
                 self.boardMessage="jugador 2 roba el pozo"

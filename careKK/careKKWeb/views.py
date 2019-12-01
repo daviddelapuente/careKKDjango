@@ -29,7 +29,7 @@ def PvsIA(request):
 
     p2CloseField=player2.getCloseField().getCardsBackImg()
     p2OpenField=player2.getOpenField().getCardsImg()
-    p2Hand=player2.getHand().getCardsBackImg()
+    p2Hand=player2.getHand().getCardsImg()
 
     return render(request,'careKKWeb/PvsIA.html',{"p1CloseField":p1CloseField,"p2CloseField":p2CloseField,"p1OpenField":p1OpenField,"p2OpenField":p2OpenField,"p1Hand":p1Hand,"p2Hand":p2Hand})
 
@@ -40,9 +40,13 @@ def player1Play(request):
     #the 0 represent the player number 0
 
     gamePvIA0.RealPlayerPlay(i,0)
-    
+
+    jugadas=gamePvIA0.players[1].think(gamePvIA0.gameState)
+
+    gamePvIA0.IAPlayerPlay(1,jugadas)
 
 
 
 
-    return JsonResponse({"f":"funciono"})
+
+    return JsonResponse({"jugadaIa":jugadas,"iaField":"HandCard"})
