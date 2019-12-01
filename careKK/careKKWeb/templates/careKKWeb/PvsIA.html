@@ -124,10 +124,17 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
 
   if(i%2==0){
     for(var j=0;j<i/2;j++){
+      
+      
+
+      var div0=document.createElement("div");
+      div0.setAttribute("id",divId);
+      document.getElementById(playerId).appendChild(div0);
 
       var div = document.createElement("div");
       div.setAttribute("id",divId+j);
-      document.getElementById(playerId).appendChild(div);
+      document.getElementById(divId).appendChild(div);
+
       var img =document.createElement("img");
       img.setAttribute("valuex",(totalWidth/2-75*(j+1)));
       img.setAttribute("valuey",(ypos));
@@ -151,9 +158,13 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
 
     for(var j=i/2;j<i;j++){
 
+      var div0=document.createElement("div");
+      div0.setAttribute("id",divId);
+      document.getElementById(playerId).appendChild(div0);
+      
       var div = document.createElement("div");
       div.setAttribute("id",divId+j);
-      document.getElementById(playerId).appendChild(div);
+      document.getElementById(divId).appendChild(div);
 
       var img =document.createElement("img");
       img.setAttribute("valuex",(totalWidth/2+75*(j-i/2)));
@@ -177,9 +188,13 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
   }else{
     var mediana=Math.floor(i/2);
     for(var j=0;j<mediana;j++){
+      var div0=document.createElement("div");
+      div0.setAttribute("id",divId);
+      document.getElementById(playerId).appendChild(div0);
+      
       var div = document.createElement("div");
       div.setAttribute("id",divId+j);
-      document.getElementById(playerId).appendChild(div);
+      document.getElementById(divId).appendChild(div);
 
       var img =document.createElement("img");
       img.setAttribute("valuex",(totalWidth/2-75*(j+2)+37.5));
@@ -187,7 +202,8 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("class","card");
       img.setAttribute("id",cardId+(mediana-1-j));
       img.setAttribute("width","75px");
-      img.setAttribute("src",field[(mediana-1)-j]);
+      img.setAttribute("src",field[(mediana-1)-j][0]);
+      img.setAttribute("cardValue",field[(mediana-1)-j][1]);
       img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
       if (ref=="top"){
         img.style.top=(ypos)+"px";
@@ -201,9 +217,13 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
 
 
 
+    var div0=document.createElement("div");
+    div0.setAttribute("id",divId);
+    document.getElementById(playerId).appendChild(div0);
+      
     var div = document.createElement("div");
-    div.setAttribute("id",divId+mediana);
-    document.getElementById(playerId).appendChild(div);
+    div.setAttribute("id",divId+j);
+    document.getElementById(divId).appendChild(div);
 
     var img =document.createElement("img");
     img.setAttribute("valuex",(totalWidth/2-37.5));
@@ -211,7 +231,8 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
     img.setAttribute("class","card");
     img.setAttribute("id",cardId+mediana);
     img.setAttribute("width","75px");
-    img.setAttribute("src",field[mediana]);
+    img.setAttribute("src",field[mediana][0]);
+    img.setAttribute("cardValue",field[mediana][1]);
     img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
       if (ref=="top"){
         img.style.top=(ypos)+"px";
@@ -224,9 +245,13 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
 
     for(var j=mediana+1;j<i;j++){
 
+      var div0=document.createElement("div");
+      div0.setAttribute("id",divId);
+      document.getElementById(playerId).appendChild(div0);
+      
       var div = document.createElement("div");
       div.setAttribute("id",divId+j);
-      document.getElementById(playerId).appendChild(div);
+      document.getElementById(divId).appendChild(div);
 
       var img =document.createElement("img");
       img.setAttribute("valuex",(totalWidth/2+75*(j-mediana)-37.5));
@@ -234,7 +259,8 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("class","card");
       img.setAttribute("id",cardId+j);
       img.setAttribute("width","75px");
-      img.setAttribute("src",field[j]);
+      img.setAttribute("src",field[j][0]);
+      img.setAttribute("cardValue",field[j][1]);
       img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
       if (ref=="top"){
         img.style.top=(ypos)+"px";
@@ -316,7 +342,11 @@ function cardToRespectivePosition(x,y){
       { 
         
         if (data.jugadaIa=="out"){
-          console.log(data.jugadaIa);
+          document.getElementById("dump").innerHTML="";
+          dumpTopValue=0;
+          document.getElementById("divP2Hand").innerHTML=""
+          setPlayerFieldCards(data.newHand,"player2Id","top",50,"divP2Hand","imgP2HandCard");
+          
         }else{
 
           document.getElementById("dump").innerHTML="";
@@ -358,7 +388,7 @@ function mouseUp(e) {
 
 function mouseDown(e) {
 
-    if (e.explicitOriginalTarget.parentNode.parentNode.id=="player1Id"){
+    if (e.explicitOriginalTarget.parentNode.parentNode.parentNode.id=="player1Id"){
       cardValue=parseInt(e.explicitOriginalTarget.attributes.cardValue.value);
       cardTop=e.target.attributes.valuey.value;
       cardLeft=e.target.attributes.valuex.value;
