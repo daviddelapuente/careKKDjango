@@ -296,6 +296,7 @@ setPlayerFieldCards({{p2Hand|safe}},"player2Id","top",50,"divP2Hand","imgP2HandC
 
 
 <script>
+let cardsIndexes=[0,1,2,3];
 let cardId=null;
 let cardTop=null;
 let cardLeft=null;
@@ -331,16 +332,20 @@ function cardToRespectivePosition(x,y){
       document.getElementById("dump").appendChild(img);
       document.getElementById(cardId).remove();
       
+      cardIndexVirtual=parseInt(cardId.substring(13));
+      cardIndexReal=cardsIndexes[cardIndexVirtual];
       $.ajax( 
-      { 
+      {   
           type:"POST", 
           url: "player1Play", 
           data:{ 
-                  jugada: cardId
+                  jugada: cardIndexReal
       }, 
       success: function( data ) 
       { 
-        
+        for(let i=cardIndexVirtual;i<cardsIndexes.length;i++){
+          cardsIndexes[i]-=1;
+        }
         if (data.jugadaIa=="out"){
           document.getElementById("dump").innerHTML="";
           dumpTopValue=0;

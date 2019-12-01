@@ -36,7 +36,7 @@ def PvsIA(request):
 @csrf_exempt
 def player1Play(request):
     global gamePvIA0
-    i=request.POST['jugada'][13:]
+    i=request.POST['jugada']
     #the 0 represent the player number 0
 
     gamePvIA0.RealPlayerPlay(i,0)
