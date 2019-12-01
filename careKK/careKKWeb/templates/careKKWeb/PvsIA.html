@@ -132,7 +132,7 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("valuex",(totalWidth/2-75*(j+1)));
       img.setAttribute("valuey",(ypos));
       img.setAttribute("class","card");
-      img.setAttribute("id",cardId+j);
+      img.setAttribute("id",cardId+((i/2-1)-j));
       img.setAttribute("width","75px");
       img.setAttribute("src",field[(i/2-1)-j]);
       img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
@@ -171,7 +171,7 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
 
 
   }else{
-    var mediana=i/2-0.5;
+    var mediana=Math.floor(i/2);
     for(var j=0;j<mediana;j++){
       var div = document.createElement("div");
       div.setAttribute("id",divId+j);
@@ -181,7 +181,7 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
       img.setAttribute("valuex",(totalWidth/2-75*(j+2)+37.5));
       img.setAttribute("valuey",(ypos));
       img.setAttribute("class","card");
-      img.setAttribute("id",cardId+j);
+      img.setAttribute("id",cardId+(mediana-1-j));
       img.setAttribute("width","75px");
       img.setAttribute("src",field[(mediana-1)-j]);
       img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()")
@@ -298,13 +298,13 @@ function cardToRespectivePosition(x,y){
       document.getElementById("dump").appendChild(img);
       document.getElementById(cardId).remove();
       
-     
+      console.log(cardId)
       $.ajax( 
       { 
           type:"POST", 
-          url: "probando", 
+          url: "player1Play", 
           data:{ 
-                  post_id: 3 
+                  jugada: cardId
       }, 
       success: function( data ) 
       { 
