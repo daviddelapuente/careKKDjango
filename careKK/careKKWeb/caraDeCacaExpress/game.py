@@ -17,16 +17,19 @@ class game:
                 self.boardMessage="jugador 2 roba el pozo"
                 self.players[i].addTohand(self.table.dump.draw())
                 self.gameState.setDumpster(self.table.dump)
+                return "out"
         elif len(self.players[i].hand.cards)>0:
                 #players[i] plays from the hand
                 cardsPlayed=self.players[i].playFromHand(jugadas)
                 newDump=self.table.dump.pushCards(cardsPlayed)
                 self.gameState.setDumpster(newDump)
+                return "HandCard"
         elif len(self.players[i].openField.cards)>0:
             #jugar con openField
                 cardsPlayed=self.players[i].playFromOpenField(jugadas)
                 newDump=self.table.dump.pushCards(cardsPlayed)
                 self.gameState.setDumpster(newDump)
+                return "OpenCard"
         else:
             #jugar con closeField            
             cardsPlayed=self.players[i].playFromCloseField(jugadas)
@@ -37,6 +40,7 @@ class game:
                 self.players[i].addTohand(cardsPlayed)
                 self.players[i].addTohand(self.table.dump.draw())
                 self.gameState.setDumpster(self.table.dump)
+            return "CloseCard"
         
     def playerWin(self,player):
         if player.hand.fieldLen()==0 and player.closeField.fieldLen()==0:

@@ -330,7 +330,7 @@ function cardToRespectivePosition(x,y){
           img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()");
           
           document.getElementById("dump").appendChild(img);
-          dumpTopValue= parseInt(document.getElementById("imgP2HandCard"+data.jugadaIa).attributes.cardValue.value);
+          dumpTopValue= parseInt(document.getElementById("imgP2"+data.iaField+data.jugadaIa).attributes.cardValue.value);
           document.getElementById("imgP2HandCard"+data.jugadaIa).remove()
 
           }} });

@@ -43,10 +43,10 @@ def player1Play(request):
 
     jugadas=gamePvIA0.players[1].think(gamePvIA0.gameState)
 
-    gamePvIA0.IAPlayerPlay(1,jugadas)
+    iaField=gamePvIA0.IAPlayerPlay(1,jugadas)
 
 
 
 
 
-    return JsonResponse({"jugadaIa":jugadas,"iaField":"HandCard"})
+    return JsonResponse({"jugadaIa":jugadas,"iaField":iaField})
