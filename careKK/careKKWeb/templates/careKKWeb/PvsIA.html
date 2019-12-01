@@ -34,6 +34,10 @@
 
   <!-- Custom styles for this template-->
   <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 </head>
 <style>
 #bg{
@@ -50,6 +54,15 @@ font-variant: normal;
 font-weight: 700; 
 line-height: 26.4px; 
 color: aliceblue;} 
+
+.btn-circle.btn-xl {
+    width: 60px;
+    height: 60px;
+    padding: 10px 10px;
+    border-radius: 50px;
+    font-size: 24px;
+    line-height: 1.33;
+}
 
 .center {
   margin: auto;
@@ -85,8 +98,12 @@ color: aliceblue;}
   padding-top: 15px;
 }
 
-.homeButton{
-  width: 200px;
+.drawButton {
+  position: absolute;
+  bottom:200px;
+  left: 50%;
+  transform: translate(-225px,0px);
+
 }
 
 .card{
@@ -112,6 +129,8 @@ color: aliceblue;}
   </div>
 
   <div id="player1Id" value=1>
+      <button type="button" class="btn btn-danger btn-circle btn-xl drawButton">  <p><i class="glyphicon glyphicon-refresh w3-spin w3-xxlarge"></i></p></i>
+      </button>
   </div>
 
 </body>
