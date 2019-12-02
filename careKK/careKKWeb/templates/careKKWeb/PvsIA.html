@@ -129,7 +129,7 @@ color: aliceblue;}
   </div>
 
   <div id="player1Id" value=1>
-      <button type="button" class="btn btn-danger btn-circle btn-xl drawButton">  <p><i class="glyphicon glyphicon-refresh w3-spin w3-xxlarge"></i></p></i>
+      <button type="button" class="btn btn-danger btn-circle btn-xl drawButton" onclick="draw()">  <p><i class="glyphicon glyphicon-refresh w3-spin w3-xxlarge"></i></p></i>
       </button>
   </div>
 
@@ -293,7 +293,6 @@ function setPlayerFieldCards(field,playerId,ref,ypos,divId,cardId){
 
   }
 
-
   
 }
 
@@ -315,7 +314,6 @@ setPlayerFieldCards({{p2Hand|safe}},"player2Id","top",50,"divP2Hand","imgP2HandC
 
 
 <script>
-let cardsIndexes=[0,1,2,3];
 let cardId=null;
 let cardTop=null;
 let cardLeft=null;
@@ -351,20 +349,22 @@ function cardToRespectivePosition(x,y){
       document.getElementById("dump").appendChild(img);
       document.getElementById(cardId).remove();
       
-      cardIndexVirtual=parseInt(cardId.substring(13));
-      cardIndexReal=cardsIndexes[cardIndexVirtual];
+      cardIndex=parseInt(cardId.substring(13));
       $.ajax( 
       {   
           type:"POST", 
           url: "player1Play", 
           data:{ 
-                  jugada: cardIndexReal
+                  jugada: cardIndex
       }, 
       success: function( data ) 
       { 
-        for(let i=cardIndexVirtual;i<cardsIndexes.length;i++){
-          cardsIndexes[i]-=1;
-        }
+
+
+        document.getElementById("divP1Hand").innerHTML=""
+        setPlayerFieldCards(data.playerHand,"player1Id","bottom",50,"divP1Hand","imgP1HandCard");
+
+
         if (data.jugadaIa=="out"){
           document.getElementById("dump").innerHTML="";
           dumpTopValue=0;
@@ -386,6 +386,10 @@ function cardToRespectivePosition(x,y){
           document.getElementById("dump").appendChild(img);
           dumpTopValue= parseInt(document.getElementById("imgP2"+data.iaField+data.jugadaIa).attributes.cardValue.value);
           document.getElementById("imgP2HandCard"+data.jugadaIa).remove()
+
+
+          document.getElementById("divP2Hand").innerHTML=""
+          setPlayerFieldCards(data.newHand,"player2Id","top",50,"divP2Hand","imgP2HandCard");
 
           }} });
 
@@ -430,6 +434,45 @@ function divMove(e){
 
 
 addListeners();
+
+function draw(){
+  if(dumpTopValue==0){
+    console.log("empty dump");
+  }else{
+    $.ajax( 
+      {   
+          type:"POST", 
+          url: "player1Play", 
+          data:{ 
+                  jugada: "draw"
+      }, 
+      success: function( data ) 
+      { 
+        document.getElementById("dump").innerHTML="";
+        dumpTopValue=0;
+        document.getElementById("divP1Hand").innerHTML=""
+        setPlayerFieldCards(data.playerHand,"player1Id","bottom",50,"divP1Hand","imgP1HandCard");
+
+
+        var img =document.createElement("img");
+
+        img.setAttribute("class","card");
+        img.setAttribute("width","75px");
+          
+        img.setAttribute("src",document.getElementById("imgP2HandCard"+data.jugadaIa).attributes.src.value);
+        img.setAttribute("onmousedown","if (event.preventDefault) event.preventDefault()");
+          
+        document.getElementById("dump").appendChild(img);
+        dumpTopValue= parseInt(document.getElementById("imgP2"+data.iaField+data.jugadaIa).attributes.cardValue.value);
+        document.getElementById("imgP2HandCard"+data.jugadaIa).remove()
+
+        document.getElementById("divP2Hand").innerHTML=""
+        setPlayerFieldCards(data.newHand,"player2Id","top",50,"divP2Hand","imgP2HandCard");
+
+
+      } });
+  }
+}
 </script>
 
 </html>

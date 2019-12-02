@@ -37,6 +37,7 @@ def PvsIA(request):
 def player1Play(request):
     global gamePvIA0
     i=request.POST['jugada']
+    
     #the 0 represent the player number 0
 
     gamePvIA0.RealPlayerPlay(i,0)
@@ -45,7 +46,5 @@ def player1Play(request):
 
     iaField=gamePvIA0.IAPlayerPlay(1,jugadas)
 
-    if jugadas=="out":
-        return JsonResponse({"jugadaIa":jugadas,"newHand":gamePvIA0.players[1].getHand().getCardsImg()})
-    else:
-        return JsonResponse({"jugadaIa":jugadas,"iaField":iaField})
+    
+    return JsonResponse({"jugadaIa":jugadas,"iaField":iaField,"newHand":gamePvIA0.players[1].getHand().getCardsImg(),"playerHand":gamePvIA0.players[0].getHand().getCardsImg()})

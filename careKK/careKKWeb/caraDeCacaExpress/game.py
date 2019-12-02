@@ -53,7 +53,8 @@ class gamePvIA(game):
         self.boardMessage=""
         game.__init__(self,players,deck,handLen,fieldsLen)
 
-    def RealPlayerPlay(self,jugadas,i):
+    def RealPlayerPlay(self,jugada,i):
+        jugadas=jugada.split("-")
         if jugadas[0]=="draw":
             self.boardMessage="jugador 1 roba el pozo"
             self.players[i].addTohand(self.table.dump.draw())
