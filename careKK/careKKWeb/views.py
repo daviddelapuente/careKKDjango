@@ -48,3 +48,9 @@ def player1Play(request):
 
     
     return JsonResponse({"jugadaIa":jugadas,"iaField":iaField,"newHand":gamePvIA0.players[1].getHand().getCardsImg(),"playerHand":gamePvIA0.players[0].getHand().getCardsImg()})
+
+
+
+
+#errores:
+#1) al jugar con fields 5x5 el oponente puede jugar cualquier carta y no respeta el dump
