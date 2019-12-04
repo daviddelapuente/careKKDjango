@@ -226,7 +226,8 @@ function cleanDump(){
   document.getElementById("dump").innerHTML="";
   dumpTopValue=0;
 }
-function cardToDump(src,newDumpValue){
+function cardToDump(src,newDumpValue,ci){
+  document.getElementById(ci).remove();
   var img =document.createElement("img");
   img.setAttribute("class","card");
   img.setAttribute("width","75px");
@@ -235,9 +236,17 @@ function cardToDump(src,newDumpValue){
   document.getElementById("dump").appendChild(img);
   dumpTopValue=newDumpValue;
 }
-function refreshPlayerHand(playerHand,playerId,ref,divField,img){
-  document.getElementById(divField).innerHTML=""
-  setPlayerFieldCards(playerHand,playerId,ref,50,divField,img);
+function refreshPlayerField(playerField,playerId,ref,divField,img,field){
+  let ypos;
+  if(field=="Hand"){
+    ypos=50;
+  }else if(field=="Open"){
+    ypos=200;
+  }else if(field=="Close"){
+    ypos=175;
+  }
+  document.getElementById(divField).innerHTML="";
+  setPlayerFieldCards(playerField,playerId,ref,ypos,divField,img);
 }
 function draw(){
   if(dumpTopValue!=0){
@@ -248,13 +257,14 @@ function draw(){
         data:{ 
           jugada: "draw"}, 
         success: function( data ) {
+          console.log(data.player2Field)
           cleanDump();
           //refresh hand
-          refreshPlayerHand(data.playerHand,"player1Id","bottom","divP1Hand","imgP1HandCard");
+          refreshPlayerField(data.player1FieldCards,"player1Id","bottom","divP1"+data.player1Field,"imgP1"+data.player1Field+"Card",data.player1Field);
           //refresh dump after ia plays
-          cardToDump(document.getElementById("imgP2HandCard"+data.jugadaIa).attributes.src.value,parseInt(document.getElementById("imgP2"+data.iaField+data.jugadaIa).attributes.cardValue.value));
+          cardToDump(document.getElementById("imgP2"+data.player2Field+"Card"+data.jugadaIa).attributes.src.value,parseInt(document.getElementById("imgP2"+data.iaField+"Card"+data.jugadaIa).attributes.cardValue.value),"imgP2"+data.player2Field+"Card"+data.jugadaIa);
           //refresh ia hand
-          refreshPlayerHand(data.newHand,"player2Id","top","divP2Hand","imgP2HandCard");
+          refreshPlayerField(data.player2FieldCards,"player2Id","top","divP2"+data.player2Field,"imgP2"+data.player2Field+"Card",data.player2Field);
         }
       }
     );
@@ -267,7 +277,7 @@ function cardToRespectivePosition(x,y){
     ylow=document.getElementById("dump").offsetTop-50;
     yhigh=ylow+105;
     if((cardValue>=dumpTopValue) && xlow<=x && x<=xhigh && ylow<=y && y<=yhigh){
-      cardToDump(document.getElementById(cardId).attributes.src.value,cardValue);
+      cardToDump(document.getElementById(cardId).attributes.src.value,cardValue,cardId);
       cardIndex=parseInt(cardId.substring(13));
       $.ajax( 
        {   
@@ -276,16 +286,21 @@ function cardToRespectivePosition(x,y){
         data:{ 
           jugada: cardIndex}, 
         success: function( data ) {
-          refreshPlayerHand(data.playerHand,"player1Id","bottom","divP1Hand","imgP1HandCard");
+          refreshPlayerField(data.player1FieldCards,"player1Id","bottom","divP1"+data.player1Field,"imgP1"+data.player1Field+"Card",data.player1Field);
           if (data.jugadaIa=="out"){
             cleanDump();
-            refreshPlayerHand(data.newHand,"player2Id","top","divP2Hand","imgP2HandCard");
+            console.log(data.player2Field)
+            refreshPlayerField(data.player2FieldCards,"player2Id","top","divP2"+data.player2Field,"imgP2"+data.player2Field+"Card",data.player2Field);
           }else{
-            cardToDump(document.getElementById("imgP2HandCard"+data.jugadaIa).attributes.src.value,parseInt(document.getElementById("imgP2"+data.iaField+data.jugadaIa).attributes.cardValue.value));
-            refreshPlayerHand(data.newHand,"player2Id","top","divP2Hand","imgP2HandCard");
+            cardToDump(document.getElementById("imgP2"+data.player2Field+"Card"+data.jugadaIa).attributes.src.value,parseInt(document.getElementById("imgP2"+data.iaField+"Card"+data.jugadaIa).attributes.cardValue.value),"imgP2"+data.player2Field+"Card"+data.jugadaIa);
+            refreshPlayerField(data.player2FieldCards,"player2Id","top","divP2"+data.player2Field,"imgP2"+data.player2Field+"Card",data.player2Field);
           }
-          if(data.playerHand.length==0){
+          if(data.player1Field=="Hand"){
+            moveField="divP1Hand";
+          }else if(data.player1Field=="Open"){
             moveField="divP1Open";
+          }else if(data.player1Field=="Close"){
+            moveField="divp1Close";
           }
         } 
       }

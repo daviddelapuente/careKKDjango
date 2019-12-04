@@ -64,9 +64,12 @@ class field:
         for card in self.cards:
             imgs.append(["/static/src/images/"+card.getBackImg(),card.getValue()])
         return imgs
+    def getName(self):
+        return self.name
 
 class hand(field):
     def __init__(self,cards):
+        self.name="Hand"
         field.__init__(self,cards)
 
     def playCards(self,x,y=-1):
@@ -80,6 +83,10 @@ class hand(field):
             return cardsPlayed
 
 class openField(field):
+    def __init__(self,cards):
+        self.name="Open"
+        field.__init__(self,cards)
+
     def playCards(self,x,y=-1):
         cardsPlayed=[]
         if y==-1:
@@ -90,6 +97,10 @@ class openField(field):
         return cardsPlayed
 
 class  closeField(field):
+    def __init__(self,cards):
+        self.name="Close"
+        field.__init__(self,cards)
+
     def playCards(self, x):
         cardsPlayed = []
         cardsPlayed.append(self.cards.pop(x))

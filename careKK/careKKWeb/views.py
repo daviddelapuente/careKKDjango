@@ -43,11 +43,15 @@ def player1Play(request):
     gamePvIA0.RealPlayerPlay(i,0)
 
     jugadas=gamePvIA0.players[1].think(gamePvIA0.gameState)
-
-    iaField=gamePvIA0.IAPlayerPlay(1,jugadas)
+    if jugadas=="out":
+        iaFieldName=gamePvIA0.IAPlayerPlay(1,jugadas)
+        iaField=gamePvIA0.players[1].getActualField()
+    else:
+        iaField=gamePvIA0.players[1].getActualField()
+        iaFieldName=gamePvIA0.IAPlayerPlay(1,jugadas)
 
     
-    return JsonResponse({"jugadaIa":jugadas,"iaField":iaField,"newHand":gamePvIA0.players[1].getHand().getCardsImg(),"playerHand":gamePvIA0.players[0].getHand().getCardsImg()})
+    return JsonResponse({"jugadaIa":jugadas,"iaField":iaFieldName,"player2FieldCards":iaField.getCardsImg(),"player2Field":iaFieldName,"player1FieldCards":gamePvIA0.players[0].getActualField().getCardsImg(),"player1Field":gamePvIA0.players[0].getActualField().getName()})
 
 
 

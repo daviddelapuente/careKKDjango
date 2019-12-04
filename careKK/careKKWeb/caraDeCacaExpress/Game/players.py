@@ -83,6 +83,9 @@ class player:
         for i in range(hand.fieldLen()):
             str+="["+ cards[i].getChar() +"]"
         print(str)
+    
+    def getActualField(self):
+        return self.actualField
 
 
 
